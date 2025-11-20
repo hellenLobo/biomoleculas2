@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CELLlab</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+ <header class="new-header">
+    <div class="header-overlay"></div>
+
+    <!-- Botones fijos en la parte superior derecha -->
+    <div class="auth-buttons" id="authButtons">
+        <button class="btn-acceder" onclick="openLoginModal()">Acceder</button>
+        <button class="btn-registrar" onclick="openRegisterModal()">Registrarte</button>
+    </div>
+    
+    <!-- Usuario logueado -->
+    <div class="user-info" id="userInfo" style="display: none;">
+        <span class="user-name" id="userName"></span>
+        <button class="btn-logout" onclick="handleLogout()">Salir</button>
+    </div>
+
+    <div class="header-top">
+        <img src="images/logo.jpeg" alt="CellLab Logo" class="site-logo-uniform">
+        <div class="header-text">
+            <h1 class="site-name">CellLab<span>.web</span></h1>
+            <h2 class="header-slogan">BIOMOLÉCULAS: LA BASE QUÍMICA DE LA VIDA</h2>
+        </div>
+    </div>
+</header>
+
+    <!-- Modal de Inicio de Sesión -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div id="login-message" class="message"></div>
+                <div class="form-group">
+                    <label for="login-email">Correo Electrónico</label>
+                    <input type="email" id="login-email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="submit-btn">Entrar</button>
+                <p class="form-footer">¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Crear Cuenta</h2>
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div id="register-message" class="message"></div>
+                <div class="form-group">
+                    <label for="register-name">Nombre Completo</label>
+                    <input type="text" id="register-name" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Correo Electrónico</label>
+                    <input type="email" id="register-email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">Confirmar Contraseña</label>
+                    <input type="password" id="register-confirm" required placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="submit-btn">Registrarse</button>
+                <p class="form-footer">¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Secciones -->
+    <section id="seccion1">
+    <div class="container">
+    <h2>Composición y Clasificación de las Biomoléculas</h2>
+    <p>Estas moléculas se componen principalmente de carbono (C), hidrógeno (H), oxígeno (O) y nitrógeno (N), aprovechando la versatilidad del carbono para formar estructuras complejas. Se clasifican en dos grandes grupos:</p>
+    <div class="row">
+        <div class="card1">
+            <h4>Biomoléculas Inorgánicas</h4>
+            <p>Comunes en seres vivos y materia inerte. Incluyen el agua (mayor componente de los organismos) y las sales minerales (esenciales para el equilibrio interno y procesos como la transmisión nerviosa).</p>
+        </div>
+
+        <div class="card2">
+            <h4>Biomoléculas Orgánicas</h4>
+            <p>Exclusivas de los seres vivos y basadas en carbono. Las principales son:</p>
+            <ul>
+                <li>Carbohidratos: Energía inmediata.</li>
+                <li>Lípidos: Reserva energética y membranas celulares.</li>
+                <li>Proteínas: Funciones estructurales, enzimáticas y defensivas.</li>
+                <li>Ácidos Nucleicos (ADN/ARN): Almacenan y transmiten información genética.</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+    <section id="seccion2" class="content-section">
+        <div class="container">
+            <h2>El Citoesqueleto: La Arquitectura Dinámica Celular</h2>
+            <p class="section-intro">El citoesqueleto es una compleja red tridimensional de filamentos proteicos en el citoplasma de las células eucariotas. No es estático, sino que se reorganiza constantemente para mantener la forma celular, permitir el movimiento y organizar los componentes internos.</p>
+            <div class="cyto-visuals">
+                <div class="cyto-item">
+                    <div class="cyto-image" style="background-image: url('images/actina.png');"></div>
+                    <h3>Microfilamentos (Actina)</h3>
+                    <p>Los más delgados (7 nm). Proporcionan soporte estructural bajo la membrana plasmática y participan en el movimiento celular (contracción muscular, citocinesis) y la adhesión celular.</p>
+                </div>
+                <div class="cyto-item">
+                    <div class="cyto-image" style="background-image: url('images/filamentos.png');"></div>
+                    <h3>Filamentos Intermedios</h3>
+                    <p>Grosor intermedio (8-12 nm), formados por proteínas como las queratinas o la vimentina. Brindan <span class="highlight">resistencia mecánica</span> extendiéndose desde la envoltura nuclear para dar estabilidad.</p>
+                </div>
+                <div class="cyto-item">
+                    <div class="cyto-image" style="background-image: url('images/tubulina.png');"></div>
+                    <h3>Microtúbulos (Tubulina)</h3>
+                    <p>Los más gruesos (25 nm) originados en el centrosoma. Actúan como rutas de <span class="highlight">transporte intracelular</span>, forman el huso mitótico y componen cilios y flagelos.</p>
+                </div>
+            </div>
+            <div class="note-block">
+                <p>El citoesqueleto interactúa con la membrana plasmática y los orgánulos, coordinando la posición de estos, la forma celular y procesos de señalización, migración y anclaje de proteínas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="seccion3" class="content-section">
+        <div class="container">
+            <h2>Sistema de Endomembranas: Fábrica y Distribución Celular</h2>
+            <p class="section-intro">Coordina la síntesis, procesamiento y transporte de proteínas y lípidos, separando procesos metabólicos en compartimentos especializados.</p>
+            <div class="endomembrane-timeline">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-card">
+                            <h3>Retículo Endoplasmático Rugoso (RER)</h3>
+                            <p>Con ribosomas adheridos para sintetizar proteínas que luego se modifican (plegamiento, glicosilación) antes de ser transportadas.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <h3>Retículo Endoplasmático Liso (REL)</h3>
+                            <p>Sin ribosomas. Se encarga de la síntesis de lípidos, el almacenamiento de calcio y la detoxificación de sustancias químicas.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-card">
+                            <h3>Aparato de Golgi</h3>
+                            <p>Recibe vesículas del RE para madurar, modificar (glicosilación, fosforilación) y clasificar proteínas y lípidos hacia su destino final.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <h3>Vesículas de Transporte</h3>
+                            <p>Estructuras membranosas que trasladan materiales de forma controlada entre los compartimentos del sistema de endomembranas.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-card">
+                            <h3>Lisosomas</h3>
+                            <p>Vesículas especializadas con enzimas hidrolíticas para la digestión intracelular y la renovación de componentes celulares.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <h3>Endosomas</h3>
+                            <p>Orgánulos de clasificación que reciben material endocitado, deciden su reciclaje o degradación y lo dirigen hacia los lisosomas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="seccion4" class="content-section mec-section">
+        <div class="container">
+            <div class="mec-grid">
+                <div class="mec-info">
+                    <h2>Matriz Extracelular (MEC): Soporte y Comunicación Tisular</h2>
+                    <p class="section-intro">La MEC es una red compleja de moléculas fuera de las células que proporciona soporte, cohesión y comunicación. Es un medio dinámico que influye en la forma, migración y supervivencia celular.</p>
+                    <h3 class="mec-subtitle">Componentes Clave de la MEC</h3>
+                    <div class="mec-items">
+                        <div class="mec-item">
+                            <div class="mec-icon"></div>
+                            <div>
+                                <h4>Proteínas Fibrosas</h4>
+                                <p><span class="highlight">Colágeno</span> (resistencia a la tracción), <span class="highlight">Elastina</span> (elasticidad) y glicoproteínas como <span class="highlight">Fibronectina</span> y <span class="highlight">Laminina</span> que favorecen la adhesión celular.</p>
+                            </div>
+                        </div>
+                        <div class="mec-item">
+                            <div class="mec-icon"></div>
+                            <div>
+                                <h4>Proteoglucanos y GAGs</h4>
+                                <p>Macromoléculas hidratadas (<span class="highlight">ácido hialurónico</span>, condroitín sulfato) que retienen agua, aportan amortiguación y resistencia a la compresión en tejidos como el cartílago.</p>
+                            </div>
+                        </div>
+                        <div class="mec-item">
+                            <div class="mec-icon"></div>
+                            <div>
+                                <h4>Membrana Basal</h4>
+                                <p>MEC especializada que separa tejidos epiteliales, actuando como soporte físico y filtro selectivo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mec-visual">
+                    <div class="mec-image-card">
+                        <img src="images/membaranaExtracelular.jpg" alt="Matriz extracelular histológica">
+                    </div>
+                    <div class="mec-callout card card--glass">
+                        <h4>Integrinas y señalización</h4>
+                        <p>Las <span class="highlight">integrinas</span> enlazan citoesqueleto y MEC, traduciendo señales mecánicas en respuestas bioquímicas. Coordina adhesión, supervivencia y remodelación tisular.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="seccion5" class="content-section membrane-section">
+        <div class="container">
+            <div class="membrane-header">
+                <h2>Membrana Plasmática: La Frontera Selectiva</h2>
+                <p>Estructura vital que delimita la célula, manteniendo el ambiente interno estable y regulando el intercambio de sustancias. Actúa como barrera selectiva y dinámica, esencial para la supervivencia celular.</p>
+            </div>
+            <div class="membrane-layout">
+                <div class="membrane-side1">
+                    <div class="membrane-block card card--glass">
+                        <h3>Bicapa Lipídica</h3>
+                        <p>Fosfolípidos anfipáticos organizados que crean una capa fluida y semipermeable, con colas hidrofóbicas hacia el interior y cabezas hidrofílicas hacia el exterior.</p>
+                    </div>
+                    <div class="membrane-block card card--glass">
+                        <h3>Glucocálix</h3>
+                        <p>Capa rica en carbohidratos (glucoproteínas y glucolípidos) que protege, permite el reconocimiento celular y modula la adhesión a la MEC.</p>
+                    </div>
+                </div>
+                <div class="membrane-diagram">
+                    <div class="membrane-circle">
+                        <img src="images/circle2.png" alt="diagrama de circulo">
+                        <span class="segment-icon icon-lipid"></span>
+                        <span class="segment-icon icon-carb"></span>
+                        <span class="segment-icon icon-chol"></span>
+                        <span class="segment-icon icon-protein"></span>
+                    </div>
+                </div>
+                <div class="membrane-side2">
+                    <div class="membrane-block card card--glass">
+                        <h3>Colesterol</h3>
+                        <p>Modula la fluidez de la membrana, evitando que se rigidice o se vuelva demasiado permeable ante cambios de temperatura.</p>
+                    </div>
+                    <div class="membrane-block card card--glass">
+                        <h3>Proteínas de Membrana</h3>
+                        <p>Integrales y periféricas que actúan como canales, transportadores, receptores y anclajes para el citoesqueleto, coordinando respuestas celulares.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="membrane-footer">El modelo del <span class="highlight">mosaico fluido</span> explica la movilidad de lípidos y proteínas. La membrana regula el transporte, señalización, endocitosis, exocitosis y contacto célula-célula.</p>
+        </div>
+    </section>
+
+    <section id="seccion6" class="content-section mito-section">
+    <div class="container">
+        <div class="mito-grid">
+            <div class="mito-header">
+                <h2>Mitocondrias: Centrales Energéticas y Reguladoras</h2>
+                <p class="section-intro">
+                    Orgánulos dinámicos con doble membrana que generan ATP mediante respiración celular
+                    y regulan metabolismo, calcio y apoptosis.
+                </p>
+            </div>
+            <div class="mito-left">
+                <div class="mito-illustration">
+                    <img src="images/mitocondria.png" alt="Ilustración de mitocondria">
+                </div>
+                <p class="mito-caption">
+                    Las mitocondrias poseen su propio ADN circular y ribosomas, un vestigio de su origen endosimbiótico a partir de bacterias primitivas.
+                </p>
+            </div>
+            <div class="mito-right">
+                <div class="mito-card">
+                    <div class="mito-icon">1</div>
+                    <h3>Doble Membrana</h3>
+                    <p>
+                        Membrana externa permeable y membrana interna selectiva altamente plegada en
+                        crestas para maximizar reacciones energéticas.
+                    </p>
+                </div>
+                <div class="mito-card">
+                    <div class="mito-icon">2</div>
+                    <h3>Matriz Mitocondrial</h3>
+                    <p>
+                        Contiene enzimas, ADN circular y ribosomas propios. Aquí se lleva a cabo el Ciclo
+                        de Krebs, generando electrones y protones.
+                    </p>
+                </div>
+                <div class="mito-card">
+                    <div class="mito-icon">3</div>
+                    <h3>Fosforilación Oxidativa</h3>
+                    <p>
+                        La cadena de transporte de electrones crea un gradiente de protones que impulsa
+                        la ATP sintasa, produciendo la mayor parte del ATP celular.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <p class="mito-footer">
+            La abundancia de mitocondrias varía con la demanda energética celular. Su dinámica de fusión
+            y fisión regula calidad, comunicación y apoptosis.
+        </p>
+    </div>
+</section>
+
+    <section id="seccion7" class="content-section nucleo-section">
+        <div class="container">
+            <div class="nucleo-header">
+                <h2>Núcleo: El Centro de Control Genético</h2>
+                <p>Orgánulo característico de las células eucariotas que organiza y protege el ADN, dirigiendo la expresión génica, el crecimiento y la división celular.</p>
+            </div>
+            <div class="nucleo-image">
+                <img src="images/nucleo.jpg" alt="Micrografía de núcleo celular">
+            </div>
+            <div class="nucleo-cards">
+                <div class="nucleo-card">
+                    <div class="nucleo-badge">1</div>
+                    <h3>Envoltura Nuclear</h3>
+                    <p>Doble membrana con poros que permite el intercambio selectivo de ARN y proteínas entre núcleo y citoplasma, manteniendo compartimentación.</p>
+                </div>
+                <div class="nucleo-card">
+                    <div class="nucleo-badge">2</div>
+                    <h3>Cromatina</h3>
+                    <p>ADN asociado a histonas que alterna entre eucromatina (activa) y heterocromatina (compacta). Se condensa en cromosomas durante la división.</p>
+                </div>
+                <div class="nucleo-card">
+                    <div class="nucleo-badge">3</div>
+                    <h3>Nucléolo</h3>
+                    <p>Región densa no membranosa encargada de sintetizar y ensamblar subunidades ribosomales que luego se exportan al citoplasma.</p>
+                </div>
+            </div>
+            <p class="nucleo-footer">El núcleo coordina la replicación del ADN, la transcripción y el procesamiento de ARN, asegurando la continuidad y regulación de la información genética.</p>
+        </div>
+    </section>
+
+    <section id="seccion8" class="content-section senal-section">
+        <div class="container">
+            <div class="senal-header">
+                <h2>Señalización Celular: Comunicación y Coordinación</h2>
+                <p>Mecanismo esencial para que las células reciban, interpreten y respondan a señales del entorno o de otras células, coordinando funciones como el crecimiento, la diferenciación y la homeostasis.</p>
+            </div>
+            <div class="senal-arrows">
+                <div class="arrow-step">Ligando se une</div>
+                <div class="arrow-step">Receptor activado</div>
+                <div class="arrow-step">Cascada de segundos</div>
+                <div class="arrow-step">Respuesta celular</div>
+            </div>
+            <div class="senal-text">
+                <p>La señal se inicia con la unión de un ligando a un receptor específico, activando adaptadores y segundos mensajeros que amplifican la respuesta.</p>
+                <ul>
+                    <li><span class="highlight">Endocrina:</span> hormonas viajan por la sangre hacia células distantes.</li>
+                    <li><span class="highlight">Paracrina:</span> actúa localmente sobre células vecinas.</li>
+                    <li><span class="highlight">Autocrina:</span> la célula regula sus propias respuestas.</li>
+                    <li><span class="highlight">Sináptica:</span> neurotransmisores entre neuronas.</li>
+                </ul>
+                <p>La respuesta final puede ser cambio génico, modificación metabólica, proliferación o apoptosis, integrando la intensidad y duración de las señales recibidas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="seccion9" class="content-section prote-section">
+        <div class="container">
+            <div class="prote-header">
+                <h2>Síntesis de Proteínas: Del Gen a la Función</h2>
+                <p>Proceso esencial que traduce la información genética del ADN en proteínas funcionales, coordinando dos etapas principales: transcripción y traducción.</p>
+            </div>
+            <div class="prote-grid">
+                <div class="card card--glass">
+                    <div class="prote-card">
+                        <h3>1. Transcripción</h3>
+                        <p>La ARN polimerasa copia un gen a ARNm dentro del núcleo, añadiendo caperuza y cola para estabilizar el mensaje.</p>
+                    </div>
+                </div>
+                <div class="card card--glass">
+                    <div class="prote-card">
+                        <h3>2. Traducción</h3>
+                        <p>En los ribosomas, el ARNm se lee en codones. El ARNt entrega aminoácidos que se enlazan formando la cadena polipeptídica.</p>
+                    </div>
+                </div>
+                <div class="card card--glass">
+                    <div class="prote-card">
+                        <h3>3. Plegamiento y Modificación</h3>
+                        <p>Chaperonas ayudan al plegamiento, mientras el RE y Golgi añaden modificaciones como glucosilación y ensamblaje de subunidades.</p>
+                    </div>
+                </div>
+                <div class="card card--glass">
+
+                    <div class="prote-card">
+                        <h3>4. Destino Final</h3>
+                        <p>Las proteínas se dirigen al citoplasma, membranas, orgánulos o al exterior mediante vesículas del sistema de endomembranas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="prote-footer">
+                <p>La síntesis proteica está finamente regulada: errores en lectura, plegamiento o tráfico generan proteínas defectuosas que afectan la función celular.</p>
+            </div>
+        </div>
+    </section>
+         <section id="seccion10" class="content-section vision-section">
+    <div class="container">
+        <div class="vision-header">
+            <h2>Visión Global de la Célula</h2>
+<div class="sub-menu-advanced">
+    <button data-target="punto1">Membrana</button>
+    <button data-target="punto2">Citoplasma</button>
+    <button data-target="punto3">Organelos</button>
+    <button data-target="punto4">Núcleo</button>
+    <button data-target="punto5">Expresión Génica</button>
+    <button data-target="punto6">Metabolismo</button>
+    <button data-target="punto7">Tipos Celulares</button>
+    <button data-target="punto8">Señalización</button>
+    <button data-target="punto9">Sistema Abierto</button>
+</div>
+<div id="punto1" class="global-card fade-in">
+<div id="punto2" class="global-card fade-in">
+<div id="punto3" class="global-card fade-in">
+<div id="punto4" class="global-card fade-in">
+<div id="punto5" class="global-card fade-in">
+<div id="punto6" class="global-card fade-in">
+<div id="punto7" class="global-card fade-in">
+<div id="punto8" class="global-card fade-in">   
+<div id="punto9" class="global-card fade-in">
+            <div class="vision-image">
+                <img src="images/vision global de la celula.avif" class="section-img-uniform" alt="Visión global de la célula">
+            </div>
+
+            <p class="section-intro">
+                La célula es la unidad estructural, funcional y genética de todos los seres vivos. A partir del estudio microscópico y molecular, se ha comprendido que, aunque existen distintos tipos de células, todas comparten una organización básica y una serie de procesos comunes que garantizan su funcionamiento y supervivencia.
+            </p>
+        </div>
+
+        <div class="vision-grid">
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">1️⃣</div>
+                <p>
+                   La célula está rodeada por una membrana plasmática, una estructura dinámica que delimita el espacio celular y regula el intercambio de sustancias con el medio externo. Esta membrana no solo actúa como barrera, sino también como un sistema de comunicación que recibe señales, reconoce otras células y permite la interacción con la matriz extracelular.
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">2️⃣</div>
+                <p>
+                    En el interior de la célula se encuentra el citoplasma, un medio acuoso donde se localizan los orgánulos y en el que se desarrollan numerosas reacciones metabólicas. En el citoplasma se distinguen dos componentes: el citosol, que es la fracción líquida rica en enzimas y moléculas disueltas, y el citoesqueleto, una red de filamentos que mantiene la forma celular, permite el movimiento y organiza los orgánulos internos.
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">3️⃣</div>
+                <p>
+                	Dentro del citoplasma se hallan los orgánulos celulares, estructuras especializadas que desempeñan funciones específicas. Las mitocondrias generan energía en forma de ATP; el retículo endoplasmático rugoso sintetiza proteínas; el retículo endoplasmático liso produce lípidos y detoxifica sustancias; el aparato de Golgi modifica y distribuye productos celulares; los lisosomas degradan moléculas y organelos dañados; y los peroxisomas intervienen en la oxidación de lípidos y la eliminación de radicales tóxicos.
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">4️⃣</div>
+                <p>
+                    En el centro de la célula se encuentra el núcleo, que alberga el material genético (ADN) organizado en cromatina y cromosomas. Desde allí se controla la expresión de los genes y, por tanto, la síntesis de proteínas que determinan las características y funciones celulares. El nucléolo, situado dentro del núcleo, es el lugar donde se fabrican los ribosomas, esenciales para la traducción del código genético
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">5️⃣</div>
+                <p>
+                	Todas las funciones celulares están estrechamente interconectadas. El ADN del núcleo contiene la información que se transcribe en ARN, el cual se traduce en los ribosomas para producir proteínas. Estas proteínas pueden ser utilizadas en el citoplasma o transportadas mediante el sistema de endomembranas hacia el aparato de Golgi, donde son modificadas y dirigidas a su destino final. 
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">6️⃣</div>
+                <p>
+                    Las células se mantienen vivas gracias a un conjunto de procesos energéticos y metabólicos. A través de la respiración celular en las mitocondrias, se obtiene la energía necesaria para realizar todas las actividades vitales. Además, las células regulan su crecimiento, su división y su muerte mediante señales internas y externas que aseguran el equilibrio del organismo
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">7️⃣</div>
+                <p>
+                    A pesar de la diversidad celular existente —como las células musculares, nerviosas, epiteliales o sanguíneas—, todas comparten los mismos principios estructurales. Cada tipo celular está especializado para realizar una función concreta, pero todas trabajan de manera coordinada dentro de los tejidos, los órganos y los sistemas del cuerpo. Esta cooperación celular es esencial para el mantenimiento de la vida en los organismos multicelulares.
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">8️⃣</div>
+                <p>
+                    Las interacciones entre las células y su entorno son fundamentales. A través de la señalización celular, las células se comunican entre sí y responden a estímulos químicos, eléctricos o mecánicos. La matriz extracelular y las uniones intercelulares garantizan la cohesión y la organización de los tejidos, mientras que la comunicación por hormonas y neurotransmisores coordina las funciones a nivel del organismo.
+                </p>
+            </div>
+
+            <div class="vision-box fade-in">
+                <div class="vb-icon">9️⃣</div>
+                <p>
+                	Desde una perspectiva global, la célula puede considerarse un sistema abierto y autorregulado que intercambia materia y energía con el medio. Mantiene su organización interna mediante procesos como el transporte vesicular, la síntesis de proteínas, la degradación de compuestos y la renovación constante de sus componentes. Esta actividad coordinada permite que la célula crezca, se reproduzca y se adapte a los cambios ambientales.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="vision-footer">
+            Todas las funciones y estructuras celulares forman un sistema integrado capaz de mantener la vida mediante equilibrio, comunicación y adaptación continua.
+        </p>
+    </div>
+</section>
+<script>
+// Scroll al subtema correcto
+document.querySelectorAll('.sub-menu-advanced button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const id = btn.dataset.target;
+        const target = document.getElementById(id);
+
+        if (target) {
+            const offset = target.getBoundingClientRect().top + window.pageYOffset - 130;
+
+            window.scrollTo({
+                top: offset,
+                behavior: "smooth"
+            });
+        }
+    });
+});
+
+// Resaltado dinámico mientras haces scroll
+const sections = document.querySelectorAll(
+    "#punto1, #punto2, #punto3, #punto4, #punto5, #punto6, #punto7, #punto8, #punto9"
+);
+
+const buttons = document.querySelectorAll('.sub-menu-advanced button');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            buttons.forEach(btn => btn.classList.remove('active'));
+            const btn = document.querySelector(
+                `.sub-menu-advanced button[data-target="${entry.target.id}"]`
+            );
+            if (btn) btn.classList.add('active');
+        }
+    });
+}, { threshold: 0.55 });
+
+sections.forEach(sec => observer.observe(sec));
+</script>
+<div id="infoModal" class="modal-overlay">
+    <div class="modal-box">
+        <span class="close-modal">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalContent"></p>
+    </div>
+</div>
+<script>
+// Contenido de cada subtema
+const subtemas = {
+    punto1: {
+        titulo: "Membrana Celular",
+        texto: " La célula está rodeada por una membrana plasmática, una estructura dinámica que delimita el espacio celular y regula el intercambio de sustancias con el medio externo. Esta membrana no solo actúa como barrera, sino también como un sistema de comunicación que recibe señales, reconoce otras células y permite la interacción con la matriz extracelular."
+    },
+    punto2: {
+        titulo: "Citoplasma",
+        texto: "En el interior de la célula se encuentra el citoplasma, un medio acuoso donde se localizan los orgánulos y en el que se desarrollan numerosas reacciones metabólicas. En el citoplasma se distinguen dos componentes: el citosol, que es la fracción líquida rica en enzimas y moléculas disueltas, y el citoesqueleto, una red de filamentos que mantiene la forma celular, permite el movimiento y organiza los orgánulos internos."
+    },
+    punto3: {
+        titulo: "Organelos",
+        texto: "Dentro del citoplasma se hallan los orgánulos celulares, estructuras especializadas que desempeñan funciones específicas. Las mitocondrias generan energía en forma de ATP; el retículo endoplasmático rugoso sintetiza proteínas; el retículo endoplasmático liso produce lípidos y detoxifica sustancias; el aparato de Golgi modifica y distribuye productos celulares; los lisosomas degradan moléculas y organelos dañados; y los peroxisomas intervienen en la oxidación de lípidos y la eliminación de radicales tóxicos."
+    },
+    punto4: {
+        titulo: "Núcleo",
+        texto: "En el centro de la célula se encuentra el núcleo, que alberga el material genético (ADN) organizado en cromatina y cromosomas. Desde allí se controla la expresión de los genes y, por tanto, la síntesis de proteínas que determinan las características y funciones celulares. El nucléolo, situado dentro del núcleo, es el lugar donde se fabrican los ribosomas, esenciales para la traducción del código genético"
+    },
+    punto5: {
+        titulo: "Expresión Génica",
+        texto: "Todas las funciones celulares están estrechamente interconectadas. El ADN del núcleo contiene la información que se transcribe en ARN, el cual se traduce en los ribosomas para producir proteínas. Estas proteínas pueden ser utilizadas en el citoplasma o transportadas mediante el sistema de endomembranas hacia el aparato de Golgi, donde son modificadas y dirigidas a su destino final."
+    },
+    punto6: {
+        titulo: "Metabolismo",
+        texto: "Las células se mantienen vivas gracias a un conjunto de procesos energéticos y metabólicos. A través de la respiración celular en las mitocondrias, se obtiene la energía necesaria para realizar todas las actividades vitales. Además, las células regulan su crecimiento, su división y su muerte mediante señales internas y externas que aseguran el equilibrio del organismo"
+    },
+    punto7: {
+        titulo: "Tipos Celulares",
+        texto: "A pesar de la diversidad celular existente —como las células musculares, nerviosas, epiteliales o sanguíneas—, todas comparten los mismos principios estructurales. Cada tipo celular está especializado para realizar una función concreta, pero todas trabajan de manera coordinada dentro de los tejidos, los órganos y los sistemas del cuerpo. Esta cooperación celular es esencial para el mantenimiento de la vida en los organismos multicelulares."
+    },
+    punto8: {
+        titulo: "Señalización Celular",
+        texto: "Las interacciones entre las células y su entorno son fundamentales. A través de la señalización celular, las células se comunican entre sí y responden a estímulos químicos, eléctricos o mecánicos. La matriz extracelular y las uniones intercelulares garantizan la cohesión y la organización de los tejidos, mientras que la comunicación por hormonas y neurotransmisores coordina las funciones a nivel del organismo."
+    },
+    punto9: {
+        titulo: "Sistema Abierto",
+        texto: "Desde una perspectiva global, la célula puede considerarse un sistema abierto y autorregulado que intercambia materia y energía con el medio. Mantiene su organización interna mediante procesos como el transporte vesicular, la síntesis de proteínas, la degradación de compuestos y la renovación constante de sus componentes. Esta actividad coordinada permite que la célula crezca, se reproduzca y se adapte a los cambios ambientales."
+    }
+};
+
+// Abrir modal al hacer clic en el menú
+document.querySelectorAll('.sub-menu-advanced button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const id = btn.dataset.target;
+        const info = subtemas[id];
+
+        document.getElementById("modalTitle").innerText = info.titulo;
+        document.getElementById("modalContent").innerText = info.texto;
+
+        document.getElementById("infoModal").style.display = "flex";
+    });
+});
+
+// Cerrar modal
+document.querySelector(".close-modal").addEventListener("click", () => {
+    document.getElementById("infoModal").style.display = "none";
+});
+
+// Cerrar al hacer clic fuera
+document.getElementById("infoModal").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) {
+        e.currentTarget.style.display = "none";
+    }
+});
+</script>
+<button class="go-videos-btn" onclick="scrollToVideos()">
+    📺 Ver Videos Subidos
+</button>
+
+<!-- =======================================================
+     SECCIÓN DE VIDEOS DE LA PÁGINA
+======================================================= -->
+
+<section id="videosSection" class="videos-section">
+    <h2 class="videos-title">📹 Videos Subidos a la Página</h2>
+
+    <div class="video-container">
+        <video id="videoPlayer" controls>
+            <source id="videoSource" src="" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+    </div>
+   <button class="upload-video-btn" onclick="document.getElementById('videoUploadInput').click();">
+    📤 Subir Video
+</button>
+
+<input type="file" id="videoUploadInput" accept="video/*" style="display: none;">
+</section>
+<script>
+const videoInput = document.getElementById("videoUploadInput");
+const videoPlayer = document.getElementById("videoPlayer");
+const videoSource = document.getElementById("videoSource");
+
+// Cuando se sube un video
+videoInput.addEventListener("change", () => {
+    const file = videoInput.files[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    videoSource.src = url;
+    videoPlayer.load();
+    videoPlayer.play();
+
+    // bajar directo a la sección de videos
+    scrollToVideos();
+});
+
+// función del botón "Ver Videos"
+function scrollToVideos() {
+    const section = document.getElementById("videosSection");
+    section.scrollIntoView({ behavior: "smooth" });
+}
+
+// Funciones para los modales de autenticación
+function openLoginModal() {
+    document.getElementById("loginModal").style.display = "block";
+    document.getElementById("login-message").innerHTML = "";
+}
+
+function closeLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+    document.getElementById("loginForm").reset();
+}
+
+function openRegisterModal() {
+    document.getElementById("registerModal").style.display = "block";
+    document.getElementById("register-message").innerHTML = "";
+}
+
+function closeRegisterModal() {
+    document.getElementById("registerModal").style.display = "none";
+    document.getElementById("registerForm").reset();
+}
+
+function switchToRegister() {
+    closeLoginModal();
+    openRegisterModal();
+}
+
+function switchToLogin() {
+    closeRegisterModal();
+    openLoginModal();
+}
+
+// Función para manejar el registro
+function handleRegister(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById("register-name").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    const confirmPassword = document.getElementById("register-confirm").value;
+    const messageDiv = document.getElementById("register-message");
+    
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+        messageDiv.innerHTML = '<p class="error-message">Las contraseñas no coinciden</p>';
+        return;
+    }
+    
+    // Verificar si el usuario ya existe
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const userExists = users.find(user => user.email === email);
+    
+    if (userExists) {
+        messageDiv.innerHTML = '<p class="error-message">Este correo ya está registrado</p>';
+        return;
+    }
+    
+    // Guardar el nuevo usuario
+    const newUser = {
+        name: name,
+        email: email,
+        password: password,
+        registeredAt: new Date().toISOString()
+    };
+    
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    
+    messageDiv.innerHTML = '<p class="success-message">¡Registro exitoso! Redirigiendo...</p>';
+    
+    // Hacer login automático después del registro
+    setTimeout(() => {
+        localStorage.setItem("currentUser", JSON.stringify(newUser));
+        closeRegisterModal();
+        updateUIForLoggedInUser(newUser);
+    }, 1500);
+}
+
+// Función para manejar el login
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    const messageDiv = document.getElementById("login-message");
+    
+    // Buscar el usuario
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(user => user.email === email && user.password === password);
+    
+    if (!user) {
+        messageDiv.innerHTML = '<p class="error-message">Correo o contraseña incorrectos</p>';
+        return;
+    }
+    
+    // Guardar sesión
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    messageDiv.innerHTML = '<p class="success-message">¡Inicio de sesión exitoso!</p>';
+    
+    setTimeout(() => {
+        closeLoginModal();
+        updateUIForLoggedInUser(user);
+    }, 1000);
+}
+
+// Función para cerrar sesión
+function handleLogout() {
+    localStorage.removeItem("currentUser");
+    document.getElementById("authButtons").style.display = "flex";
+    document.getElementById("userInfo").style.display = "none";
+}
+
+// Actualizar UI cuando el usuario está logueado
+function updateUIForLoggedInUser(user) {
+    document.getElementById("authButtons").style.display = "none";
+    document.getElementById("userInfo").style.display = "flex";
+    document.getElementById("userName").textContent = user.name;
+}
+
+// Verificar si hay un usuario logueado al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser) {
+        const user = JSON.parse(currentUser);
+        updateUIForLoggedInUser(user);
+    }
+});
+
+// Cerrar modales al hacer clic fuera
+window.onclick = function(event) {
+    const loginModal = document.getElementById("loginModal");
+    const registerModal = document.getElementById("registerModal");
+    
+    if (event.target === loginModal) {
+        closeLoginModal();
+    }
+    if (event.target === registerModal) {
+        closeRegisterModal();
+    }
+}
+</script>
+</body>
+</html>
