@@ -1,86 +1,320 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CELLlab</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CELLlab - Login Gate</title>
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== PANTALLA DE INICIO - ANIMACIÓN A ===== */
+#entryGate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0b0f28;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999999;
+  animation: fadeIn 1s ease;
+}
+
+/* El manejo de la tecla Escape fue movido al bloque <script> (había quedado insertado aquí por error) */
+#entryGate.fade-out {
+  animation: fadeOut 1s ease forwards;
+}
+
+.gate-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 25px 0;
+  text-align: center;
+}
+
+.gate-buttons {
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 1.5s;
+}
+
+.gate-logo {
+  width: 180px;
+  height: 180px;
+  background: url('images/logo.jpeg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  animation: popIn 1.3s ease;
+}
+
+.gate-btn {
+  background: #1640ff;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+.gate-btn:hover { background: #0d2cd6; }
+
+/* ===== LOGIN WINDOW MODERNO ===== */
+.login-window {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation: fadeIn 0.3s ease;
+}
+
+.login-box {
+    background: #ffffff;
+    width: 320px;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    text-align: center;
+    animation: popUp 0.35s ease;
+    position: relative;
+}
+
+.login-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+    user-select: none;
+}
+
+.login-close:hover {
+    color: #333;
+}
+
+.login-box h2 {
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.login-sub {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+}
+
+.login-box input:focus {
+    border-color: #1640ff;
+    box-shadow: 0 0 0 2px rgba(22, 64, 255, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 18px;
+    background: #1640ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.25s;
+    font-size: 15px;
+}
+.login-btn:hover { background: #0d2cd6; }
+
+.login-footer { 
+    margin-top: 15px; 
+    font-size: 14px;
+    color: #666;
+}
+
+.login-footer a {
+    color: #1640ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.error-message {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.success-message {
+    color: #388e3c;
+    background: #e8f5e9;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+@keyframes popUp { from { transform: translateY(-10px) scale(0.95); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
+
+/* Small helper to hide page scroll while gate shown */
+body.showing-gate { overflow: hidden; }
+</style>
 </head>
-<body>
- <header class="new-header">
-    <div class="header-overlay"></div>
+<body class="showing-gate">
 
-    <!-- Botones fijos en la parte superior derecha -->
-    <div class="auth-buttons" id="authButtons">
-        <button class="btn-acceder" onclick="openLoginModal()">Acceder</button>
-        <button class="btn-registrar" onclick="openRegisterModal()">Registrarte</button>
-    </div>
-    
-    <!-- Usuario logueado -->
-    <div class="user-info" id="userInfo" style="display: none;">
-        <span class="user-name" id="userName"></span>
-        <button class="btn-logout" onclick="handleLogout()">Salir</button>
-    </div>
-
-    <div class="header-top">
-        <img src="images/logo.jpeg" alt="CellLab Logo" class="site-logo-uniform">
-        <div class="header-text">
-            <h1 class="site-name">CellLab<span>.web</span></h1>
-            <h2 class="header-slogan">BIOMOLÉCULAS: LA BASE QUÍMICA DE LA VIDA</h2>
+<!-- =====================================
+     HEADER CON INFO DE USUARIO
+===================================== -->
+<header id="userHeader" style="display: none;">
+    <div class="user-info-section">
+        <div class="user-avatar">
+            <span id="userInitials"></span>
+        </div>
+        <div class="user-details">
+            <span id="headerUserName" class="user-name"></span>
+            <span id="headerUserEmail" class="user-email"></span>
         </div>
     </div>
 </header>
 
-    <!-- Modal de Inicio de Sesión -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeLoginModal()">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
-                <div id="login-message" class="message"></div>
-                <div class="form-group">
-                    <label for="login-email">Correo Electrónico</label>
-                    <input type="email" id="login-email" required placeholder="tu@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Contraseña</label>
-                    <input type="password" id="login-password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="submit-btn">Entrar</button>
-                <p class="form-footer">¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a></p>
-            </form>
-        </div>
+<!-- =====================================
+     SIDEBAR DE NAVEGACIÓN
+===================================== -->
+<nav id="mainNav" class="sidebar" style="display: none;">
+    <div class="sidebar-header">
+        <div class="sidebar-logo"></div>
     </div>
+    <div class="sidebar-links">
+        <a href="#seccion1" class="nav-link">Biomoléculas</a>
+        <a href="#seccion2" class="nav-link">Citoesqueleto</a>
+        <a href="#seccion3" class="nav-link">Endomembranas</a>
+        <a href="#seccion4" class="nav-link">Matriz Extracelular</a>
+        <a href="#seccion5" class="nav-link">Membrana Plasmática</a>
+        <a href="#seccion6" class="nav-link">Mitocondrias</a>
+        <a href="#seccion7" class="nav-link">Núcleo</a>
+        <a href="#seccion8" class="nav-link">Señalización Celular</a>
+        <a href="#seccion9" class="nav-link">Síntesis de Proteínas</a>
+        <a href="#seccion10" class="nav-link">Visión Global</a>
+    </div>
+    <div class="sidebar-footer">
+        <button class="logout-btn" onclick="handleLogout()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Cerrar Sesión
+        </button>
+    </div>
+</nav>
 
-    <!-- Modal de Registro -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeRegisterModal()">&times;</span>
-            <h2>Crear Cuenta</h2>
-            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
-                <div id="register-message" class="message"></div>
-                <div class="form-group">
-                    <label for="register-name">Nombre Completo</label>
-                    <input type="text" id="register-name" required placeholder="Juan Pérez">
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Correo Electrónico</label>
-                    <input type="email" id="register-email" required placeholder="tu@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Contraseña</label>
-                    <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm">Confirmar Contraseña</label>
-                    <input type="password" id="register-confirm" required placeholder="••••••••" minlength="6">
-                </div>
-                <button type="submit" class="submit-btn">Registrarse</button>
-                <p class="form-footer">¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a></p>
-            </form>
-        </div>
+<!-- =====================================
+     PANTALLA DE ENTRADA ANIMADA (GATE)
+===================================== -->
+<div id="entryGate">
+  <div class="gate-logo" role="img" aria-label="Logo"></div>
+    <div class="gate-title">Bienvenido a CELLlab</div>
+  <div class="gate-buttons">
+      <button class="gate-btn" onclick="openLoginWindow()">Iniciar Sesión</button>
+      <button class="gate-btn" onclick="openRegisterModal()">Registrarse</button>
+  </div>
+</div>
+
+<!-- ==== NUEVO LOGIN WINDOW ==== -->
+<div id="loginWindow" class="login-window" aria-hidden="true">
+    <div class="login-box" role="dialog" aria-modal="true">
+        <span class="login-close" onclick="closeLoginWindow()">&times;</span>
+        <h2>Bienvenido</h2>
+        <p class="login-sub">Accede a tu cuenta</p>
+
+        <form id="loginWindowForm" onsubmit="handleLoginWindow(event)">
+            <input type="email" id="lw-email" placeholder="Correo electrónico" required>
+            <input type="password" id="lw-password" placeholder="Contraseña" required>
+
+            <button type="submit" class="login-btn">Ingresar</button>
+        </form>
+
+        <p class="login-footer">
+            ¿No tienes cuenta?
+            <a href="#" onclick="switchFromWindowToRegister()">Regístrate aquí</a>
+        </p>
     </div>
+</div>
+
+<!-- ==== REGISTER MODAL (simple) ==== -->
+<div id="registerModal" class="login-window" style="display:none;" aria-hidden="true">
+    <div class="login-box" role="dialog" aria-modal="true">
+        <span class="login-close" onclick="closeRegisterModal()">&times;</span>
+        <h2>Crear Cuenta</h2>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <input type="text" id="register-name" required placeholder="Nombre completo">
+            <input type="email" id="register-email" required placeholder="Correo electrónico">
+            <input type="password" id="register-password" required placeholder="Contraseña (6+)" minlength="6">
+            <input type="password" id="register-confirm" required placeholder="Confirmar contraseña" minlength="6">
+            <button type="submit" class="login-btn">Registrarse</button>
+        </form>
+        <div id="register-message" class="form-message" aria-live="polite"></div>
+        <p class="login-footer">¿Ya tienes cuenta? <a href="#" onclick="switchToLoginFromRegister()">Inicia sesión</a></p>
+    </div>
+</div>
+
+<!-- ==== LOGIN MODAL (legacy) ==== -->
+<div id="loginModal" class="login-window" style="display:none;" aria-hidden="true">
+    <div class="login-box" role="dialog" aria-modal="true">
+        <span class="login-close" onclick="closeLoginModal()">&times;</span>
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <input type="email" id="login-email" required placeholder="tu@email.com">
+            <input type="password" id="login-password" required placeholder="••••••••">
+            <button type="submit" class="login-btn">Entrar</button>
+        </form>
+        <div id="login-message" class="form-message" aria-live="polite"></div>
+        <p class="login-footer">¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate</a></p>
+    </div>
+</div>
 
     <!-- Secciones -->
     <section id="seccion1">
@@ -387,31 +621,22 @@
                 <p>Proceso esencial que traduce la información genética del ADN en proteínas funcionales, coordinando dos etapas principales: transcripción y traducción.</p>
             </div>
             <div class="prote-grid">
-                <div class="card card--glass">
                     <div class="prote-card">
                         <h3>1. Transcripción</h3>
                         <p>La ARN polimerasa copia un gen a ARNm dentro del núcleo, añadiendo caperuza y cola para estabilizar el mensaje.</p>
                     </div>
-                </div>
-                <div class="card card--glass">
                     <div class="prote-card">
                         <h3>2. Traducción</h3>
                         <p>En los ribosomas, el ARNm se lee en codones. El ARNt entrega aminoácidos que se enlazan formando la cadena polipeptídica.</p>
                     </div>
-                </div>
-                <div class="card card--glass">
                     <div class="prote-card">
                         <h3>3. Plegamiento y Modificación</h3>
                         <p>Chaperonas ayudan al plegamiento, mientras el RE y Golgi añaden modificaciones como glucosilación y ensamblaje de subunidades.</p>
                     </div>
-                </div>
-                <div class="card card--glass">
-
                     <div class="prote-card">
                         <h3>4. Destino Final</h3>
                         <p>Las proteínas se dirigen al citoplasma, membranas, orgánulos o al exterior mediante vesículas del sistema de endomembranas.</p>
                     </div>
-                </div>
             </div>
             <div class="prote-footer">
                 <p>La síntesis proteica está finamente regulada: errores en lectura, plegamiento o tráfico generan proteínas defectuosas que afectan la función celular.</p>
@@ -422,106 +647,38 @@
     <div class="container">
         <div class="vision-header">
             <h2>Visión Global de la Célula</h2>
-<div class="sub-menu-advanced">
-    <button data-target="punto1">Membrana</button>
-    <button data-target="punto2">Citoplasma</button>
-    <button data-target="punto3">Organelos</button>
-    <button data-target="punto4">Núcleo</button>
-    <button data-target="punto5">Expresión Génica</button>
-    <button data-target="punto6">Metabolismo</button>
-    <button data-target="punto7">Tipos Celulares</button>
-    <button data-target="punto8">Señalización</button>
-    <button data-target="punto9">Sistema Abierto</button>
-</div>
-<div id="punto1" class="global-card fade-in">
-<div id="punto2" class="global-card fade-in">
-<div id="punto3" class="global-card fade-in">
-<div id="punto4" class="global-card fade-in">
-<div id="punto5" class="global-card fade-in">
-<div id="punto6" class="global-card fade-in">
-<div id="punto7" class="global-card fade-in">
-<div id="punto8" class="global-card fade-in">   
-<div id="punto9" class="global-card fade-in">
             <div class="vision-image">
-                <img src="images/vision global de la celula.avif" class="section-img-uniform" alt="Visión global de la célula">
+                <img src="images/celula1.jpg" class="section-img-uniform" alt="Visión global de la célula">
             </div>
 
             <p class="section-intro">
                 La célula es la unidad estructural, funcional y genética de todos los seres vivos. A partir del estudio microscópico y molecular, se ha comprendido que, aunque existen distintos tipos de células, todas comparten una organización básica y una serie de procesos comunes que garantizan su funcionamiento y supervivencia.
             </p>
         </div>
-
-        <div class="vision-grid">
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">1️⃣</div>
-                <p>
-                   La célula está rodeada por una membrana plasmática, una estructura dinámica que delimita el espacio celular y regula el intercambio de sustancias con el medio externo. Esta membrana no solo actúa como barrera, sino también como un sistema de comunicación que recibe señales, reconoce otras células y permite la interacción con la matriz extracelular.
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">2️⃣</div>
-                <p>
-                    En el interior de la célula se encuentra el citoplasma, un medio acuoso donde se localizan los orgánulos y en el que se desarrollan numerosas reacciones metabólicas. En el citoplasma se distinguen dos componentes: el citosol, que es la fracción líquida rica en enzimas y moléculas disueltas, y el citoesqueleto, una red de filamentos que mantiene la forma celular, permite el movimiento y organiza los orgánulos internos.
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">3️⃣</div>
-                <p>
-                	Dentro del citoplasma se hallan los orgánulos celulares, estructuras especializadas que desempeñan funciones específicas. Las mitocondrias generan energía en forma de ATP; el retículo endoplasmático rugoso sintetiza proteínas; el retículo endoplasmático liso produce lípidos y detoxifica sustancias; el aparato de Golgi modifica y distribuye productos celulares; los lisosomas degradan moléculas y organelos dañados; y los peroxisomas intervienen en la oxidación de lípidos y la eliminación de radicales tóxicos.
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">4️⃣</div>
-                <p>
-                    En el centro de la célula se encuentra el núcleo, que alberga el material genético (ADN) organizado en cromatina y cromosomas. Desde allí se controla la expresión de los genes y, por tanto, la síntesis de proteínas que determinan las características y funciones celulares. El nucléolo, situado dentro del núcleo, es el lugar donde se fabrican los ribosomas, esenciales para la traducción del código genético
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">5️⃣</div>
-                <p>
-                	Todas las funciones celulares están estrechamente interconectadas. El ADN del núcleo contiene la información que se transcribe en ARN, el cual se traduce en los ribosomas para producir proteínas. Estas proteínas pueden ser utilizadas en el citoplasma o transportadas mediante el sistema de endomembranas hacia el aparato de Golgi, donde son modificadas y dirigidas a su destino final. 
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">6️⃣</div>
-                <p>
-                    Las células se mantienen vivas gracias a un conjunto de procesos energéticos y metabólicos. A través de la respiración celular en las mitocondrias, se obtiene la energía necesaria para realizar todas las actividades vitales. Además, las células regulan su crecimiento, su división y su muerte mediante señales internas y externas que aseguran el equilibrio del organismo
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">7️⃣</div>
-                <p>
-                    A pesar de la diversidad celular existente —como las células musculares, nerviosas, epiteliales o sanguíneas—, todas comparten los mismos principios estructurales. Cada tipo celular está especializado para realizar una función concreta, pero todas trabajan de manera coordinada dentro de los tejidos, los órganos y los sistemas del cuerpo. Esta cooperación celular es esencial para el mantenimiento de la vida en los organismos multicelulares.
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">8️⃣</div>
-                <p>
-                    Las interacciones entre las células y su entorno son fundamentales. A través de la señalización celular, las células se comunican entre sí y responden a estímulos químicos, eléctricos o mecánicos. La matriz extracelular y las uniones intercelulares garantizan la cohesión y la organización de los tejidos, mientras que la comunicación por hormonas y neurotransmisores coordina las funciones a nivel del organismo.
-                </p>
-            </div>
-
-            <div class="vision-box fade-in">
-                <div class="vb-icon">9️⃣</div>
-                <p>
-                	Desde una perspectiva global, la célula puede considerarse un sistema abierto y autorregulado que intercambia materia y energía con el medio. Mantiene su organización interna mediante procesos como el transporte vesicular, la síntesis de proteínas, la degradación de compuestos y la renovación constante de sus componentes. Esta actividad coordinada permite que la célula crezca, se reproduzca y se adapte a los cambios ambientales.
-                </p>
-            </div>
-
+        <div class="sub-menu-advanced">
+            <button data-target="punto1">Membrana</button>
+            <button data-target="punto2">Citoplasma</button>
+            <button data-target="punto3">Organelos</button>
+            <button data-target="punto4">Núcleo</button>
+            <button data-target="punto5">Expresión Génica</button>
+            <button data-target="punto6">Metabolismo</button>
+            <button data-target="punto7">Tipos Celulares</button>
+            <button data-target="punto8">Señalización</button>
+            <button data-target="punto9">Sistema Abierto</button>
         </div>
-
+        <div id="punto1" class="global-card fade-in">
+        <div id="punto2" class="global-card fade-in">
+        <div id="punto3" class="global-card fade-in">
+        <div id="punto4" class="global-card fade-in">
+        <div id="punto5" class="global-card fade-in">
+        <div id="punto6" class="global-card fade-in">
+        <div id="punto7" class="global-card fade-in">
+        <div id="punto8" class="global-card fade-in">   
+        <div id="punto9" class="global-card fade-in">
+        </div>
         <p class="vision-footer">
-            Todas las funciones y estructuras celulares forman un sistema integrado capaz de mantener la vida mediante equilibrio, comunicación y adaptación continua.
-        </p>
-    </div>
+                    Todas las funciones y estructuras celulares forman un sistema integrado capaz de mantener la vida mediante equilibrio, comunicación y adaptación continua.
+                </p>
 </section>
 <script>
 // Scroll al subtema correcto
@@ -532,11 +689,6 @@ document.querySelectorAll('.sub-menu-advanced button').forEach(btn => {
 
         if (target) {
             const offset = target.getBoundingClientRect().top + window.pageYOffset - 130;
-
-            window.scrollTo({
-                top: offset,
-                behavior: "smooth"
-            });
         }
     });
 });
@@ -635,16 +787,13 @@ document.getElementById("infoModal").addEventListener("click", (e) => {
     }
 });
 </script>
-<button class="go-videos-btn" onclick="scrollToVideos()">
-    📺 Ver Videos Subidos
-</button>
 
 <!-- =======================================================
      SECCIÓN DE VIDEOS DE LA PÁGINA
 ======================================================= -->
 
 <section id="videosSection" class="videos-section">
-    <h2 class="videos-title">📹 Videos Subidos a la Página</h2>
+    <h2 class="videos-title">Videos Subidos a la Página</h2>
 
     <div class="video-container">
         <video id="videoPlayer" controls>
@@ -652,8 +801,11 @@ document.getElementById("infoModal").addEventListener("click", (e) => {
             Tu navegador no soporta videos HTML5.
         </video>
     </div>
+    <button class="go-videos-btn" onclick="scrollToVideos()">
+    Ver Videos Subidos
+</button>
    <button class="upload-video-btn" onclick="document.getElementById('videoUploadInput').click();">
-    📤 Subir Video
+    Subir Video
 </button>
 
 <input type="file" id="videoUploadInput" accept="video/*" style="display: none;">
@@ -685,23 +837,73 @@ function scrollToVideos() {
 
 // Funciones para los modales de autenticación
 function openLoginModal() {
-    document.getElementById("loginModal").style.display = "block";
+    // hide entry gate so user can interact with the page beneath
+    closeEntryGate();
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "flex";
+    modal.setAttribute('aria-hidden', 'false');
     document.getElementById("login-message").innerHTML = "";
 }
 
 function closeLoginModal() {
-    document.getElementById("loginModal").style.display = "none";
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
     document.getElementById("loginForm").reset();
+    document.getElementById("login-message").innerHTML = "";
+    
+    // Mostrar la pantalla de entrada nuevamente
+    const gate = document.getElementById('entryGate');
+    if (gate && gate.style.display === 'none') {
+        gate.style.display = 'flex';
+        gate.classList.remove('fade-out');
+        document.body.classList.add('showing-gate');
+    }
 }
 
 function openRegisterModal() {
-    document.getElementById("registerModal").style.display = "block";
+    // hide entry gate so user can interact with the page beneath
+    closeEntryGate();
+    const modal = document.getElementById("registerModal");
+    modal.style.display = "flex";
+    modal.setAttribute('aria-hidden', 'false');
     document.getElementById("register-message").innerHTML = "";
 }
 
+// Close the entry gate overlay so page becomes interactive
+function closeEntryGate() {
+    const gate = document.getElementById('entryGate');
+    if (!gate) return;
+
+    // add fade-out class to trigger CSS animation
+    gate.classList.add('fade-out');
+
+    // after animation ends, hide the element and restore body scrolling
+    const cleanup = () => {
+        gate.style.display = 'none';
+        document.body.classList.remove('showing-gate');
+        gate.removeEventListener('animationend', cleanup);
+    };
+
+    gate.addEventListener('animationend', cleanup);
+    // fallback in case animationend doesn't fire
+    setTimeout(cleanup, 1100);
+}
+
 function closeRegisterModal() {
-    document.getElementById("registerModal").style.display = "none";
+    const modal = document.getElementById("registerModal");
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
     document.getElementById("registerForm").reset();
+    document.getElementById("register-message").innerHTML = "";
+    
+    // Mostrar la pantalla de entrada nuevamente
+    const gate = document.getElementById('entryGate');
+    if (gate && gate.style.display === 'none') {
+        gate.style.display = 'flex';
+        gate.classList.remove('fade-out');
+        document.body.classList.add('showing-gate');
+    }
 }
 
 function switchToRegister() {
@@ -712,6 +914,67 @@ function switchToRegister() {
 function switchToLogin() {
     closeRegisterModal();
     openLoginModal();
+}
+
+function switchToLoginFromRegister() {
+    closeRegisterModal();
+    openLoginWindow();
+}
+
+// NEW: handlers for the modern "login window" (ID: `loginWindow`)
+function openLoginWindow() {
+    const win = document.getElementById('loginWindow');
+    if (win) {
+        // hide entry gate so user can interact with page
+        closeEntryGate();
+        win.style.display = 'flex';
+        win.setAttribute('aria-hidden', 'false');
+    } else {
+        // fallback to legacy modal if the window element is missing
+        openLoginModal();
+    }
+}
+
+function closeLoginWindow() {
+    const win = document.getElementById('loginWindow');
+    if (win) {
+        win.style.display = 'none';
+        win.setAttribute('aria-hidden', 'true');
+        const form = document.getElementById('loginWindowForm');
+        if (form) form.reset();
+    }
+    
+    // Mostrar la pantalla de entrada nuevamente
+    const gate = document.getElementById('entryGate');
+    if (gate && gate.style.display === 'none') {
+        gate.style.display = 'flex';
+        gate.classList.remove('fade-out');
+        document.body.classList.add('showing-gate');
+    }
+}
+
+function handleLoginWindow(event) {
+    event.preventDefault();
+    const email = document.getElementById('lw-email').value;
+    const password = document.getElementById('lw-password').value;
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+        // lightweight feedback for this simple demo
+        alert('Correo o contraseña incorrectos');
+        return;
+    }
+
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    closeLoginWindow();
+    updateUIForLoggedInUser(user);
+}
+
+function switchFromWindowToRegister() {
+    closeLoginWindow();
+    openRegisterModal();
 }
 
 // Función para manejar el registro
@@ -790,15 +1053,56 @@ function handleLogin(event) {
 // Función para cerrar sesión
 function handleLogout() {
     localStorage.removeItem("currentUser");
-    document.getElementById("authButtons").style.display = "flex";
-    document.getElementById("userInfo").style.display = "none";
+    
+    // Ocultar header de usuario
+    const userHeader = document.getElementById("userHeader");
+    if (userHeader) userHeader.style.display = "none";
+    
+    // Ocultar menú de navegación
+    const mainNav = document.getElementById("mainNav");
+    if (mainNav) mainNav.style.display = "none";
+    
+    // Mostrar pantalla de entrada nuevamente
+    const gate = document.getElementById('entryGate');
+    if (gate) {
+        gate.style.display = 'flex';
+        gate.classList.remove('fade-out');
+        document.body.classList.add('showing-gate');
+    }
+    
+    // Limpiar cualquier modal abierto
+    closeLoginModal();
+    closeRegisterModal();
+    closeLoginWindow();
 }
 
 // Actualizar UI cuando el usuario está logueado
 function updateUIForLoggedInUser(user) {
-    document.getElementById("authButtons").style.display = "none";
-    document.getElementById("userInfo").style.display = "flex";
-    document.getElementById("userName").textContent = user.name;
+    // Ocultar pantalla de entrada
+    closeEntryGate();
+    
+    // Mostrar header con info de usuario
+    const userHeader = document.getElementById("userHeader");
+    const headerUserName = document.getElementById("headerUserName");
+    const headerUserEmail = document.getElementById("headerUserEmail");
+    const userInitials = document.getElementById("userInitials");
+    
+    if (userHeader) userHeader.style.display = "block";
+    if (headerUserName && user && user.name) headerUserName.textContent = user.name;
+    if (headerUserEmail && user && user.email) headerUserEmail.textContent = user.email;
+    
+    // Generar iniciales del nombre
+    if (userInitials && user && user.name) {
+        const names = user.name.trim().split(' ');
+        const initials = names.length >= 2 
+            ? names[0][0] + names[names.length - 1][0]
+            : names[0][0];
+        userInitials.textContent = initials.toUpperCase();
+    }
+    
+    // Mostrar menú de navegación
+    const mainNav = document.getElementById("mainNav");
+    if (mainNav) mainNav.style.display = "flex";
 }
 
 // Verificar si hay un usuario logueado al cargar la página
@@ -808,20 +1112,78 @@ window.addEventListener("DOMContentLoaded", () => {
         const user = JSON.parse(currentUser);
         updateUIForLoggedInUser(user);
     }
+    
+    // Smooth scroll para los enlaces del menú de navegación
+    document.querySelectorAll('#mainNav .nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                // Obtener la altura del header (no del nav/sidebar)
+                const headerHeight = document.getElementById('userHeader').offsetHeight;
+                const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Marcar manualmente el enlace como activo
+                document.querySelectorAll('#mainNav .nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+    
+    // Resaltar enlace activo según la sección visible
+    const navLinks = document.querySelectorAll('#mainNav .nav-link');
+    const sections = document.querySelectorAll('section[id^="seccion"]');
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: 0
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeId = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${activeId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+    
+    sections.forEach(section => observer.observe(section));
 });
 
-// Cerrar modales al hacer clic fuera
-window.onclick = function(event) {
-    const loginModal = document.getElementById("loginModal");
-    const registerModal = document.getElementById("registerModal");
-    
-    if (event.target === loginModal) {
-        closeLoginModal();
+// Nota: ya no cerramos los modales de login/registro al hacer clic fuera.
+// Esto evita que el usuario pierda accidentalmente el formulario al tocar fuera.
+// Si en el futuro se necesita cerrar al hacer clic fuera, implementar manejadores
+// individuales en cada modal usando `addEventListener('click', ...)` y comprobando
+// `e.target === e.currentTarget`.
+
+// Evitar que la tecla Escape cierre modales de login/registro (hacer obligatorio)
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        // si alguno de los modales de autenticación está abierto, prevenir acción
+        const loginOpen = (document.getElementById('loginModal') || {}).style?.display === 'block';
+        const registerOpen = (document.getElementById('registerModal') || {}).style?.display === 'block';
+        const loginWindowOpen = (document.getElementById('loginWindow') || {}).style?.display === 'flex';
+
+        if (loginOpen || registerOpen || loginWindowOpen) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
     }
-    if (event.target === registerModal) {
-        closeRegisterModal();
-    }
-}
+}, true);
 </script>
 </body>
 </html>
