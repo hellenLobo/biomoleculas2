@@ -23,6 +23,8 @@ body {
     font-weight: 300;
     margin: 0;
     padding: 0;
+    padding-top: 70px; /* Espacio para header */
+    padding-left: 250px; /* Espacio para sidebar */
     background: url("images/textura\ azul.jpg") center/cover no-repeat fixed;
     color: var(--muted);
     line-height: 1.7;
@@ -46,6 +48,342 @@ h1, h2, h3, h4 {
 p {
     font-size: 17px;
     margin-bottom: 18px;
+}
+
+/* ===== HEADER CON INFO DE USUARIO ===== */
+#userHeader {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Comienza después del sidebar */
+    right: 0;
+    z-index: 9999;
+    padding: 0 50px;
+    background: linear-gradient(135deg, rgba(10, 15, 31, 0.98) 0%, rgba(20, 30, 55, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* dejamos que el niño se empuje solo con margin-left:auto */
+    gap: 20px;
+    height: 70px;
+}
+
+.user-info-section {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 19px;
+    color: white;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+}
+
+.user-email {
+    font-size: 13px;
+    color: #a8c5ff;
+    opacity: 0.9;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(102, 126, 234, 0.5);
+}
+
+.logout-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.header-logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    border: 2px solid rgba(102, 126, 234, 0.25);
+    transition: all 0.3s ease;
+    background: rgba(15, 23, 43, 0.4);
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+    border-color: rgba(102, 126, 234, 0.5);
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== SIDEBAR DE NAVEGACIÓN ===== */
+#mainNav.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    z-index: 9999; /* Por debajo del header */
+    background: linear-gradient(180deg, rgba(10, 15, 31, 0.98) 0%, rgba(15, 23, 43, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(102, 126, 234, 0.2);
+    display: flex;
+    flex-direction: column;
+    animation: slideInLeft 0.5s ease;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo {
+    width: 130px;
+    height: 70px;
+    background: url('images/image.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 5%;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-link {
+    padding: 14px 18px;
+    color: #e0eaff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(102, 126, 234, 0.05);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    letter-spacing: 0.2px;
+    display: block;
+}
+
+.nav-link:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    color: white;
+    transform: translateX(5px);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: rgba(102, 126, 234, 0.6);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+.sidebar-footer {
+    padding: 20px 15px;
+    border-top: 1px solid rgba(102, 126, 234, 0.2);
+    background: linear-gradient(135deg, rgba(10, 15, 31, 0.5) 0%, rgba(15, 23, 43, 0.5) 100%);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.35);
+    letter-spacing: 0.2px;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(102, 126, 234, 0.5);
+}
+
+.logout-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustar el body para evitar que el contenido quede oculto bajo el menú */
+body {
+    padding-top: 130px;
+}
+
+body.showing-gate {
+    padding-top: 0;
+}
+
+/* Mejoras en secciones */
+.content-section {
+    margin-bottom: 60px;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    #userHeader {
+        padding: 0 20px;
+        height: auto;
+        min-height: 65px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .header-logo-container {
+        order: 1;
+    }
+    
+    .header-logo {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .user-info-container {
+        order: 2;
+        gap: 15px;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .user-details {
+        display: none;
+    }
+    
+    .logout-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    #mainNav {
+        position: relative;
+        top: 0;
+        padding: 12px 20px;
+        gap: 8px;
+        min-height: auto;
+    }
+    
+    .nav-link {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+    
+    body {
+        padding-top: 0;
+    }
 }
 
 ul {
@@ -214,10 +552,6 @@ section:first-of-type {
     font-size: 18px;
     line-height: 1.7;
     color: #d8e4ff;
-}
-
-#seccion3 {
-    background: linear-gradient(135deg, rgba(11,23,47,0.92), rgba(14,35,80,0.1));
 }
 
 .endomembrane-timeline {
@@ -490,13 +824,13 @@ section:first-of-type {
 
 /* Sección 4: Matriz Extracelular */
 .mec-section {
-    background: linear-gradient(120deg, #0c1630, #0a1127 50%, #0d1a3a);
-    border: 1px solid rgba(116, 176, 255, 0.14);
+    background: linear-gradient(135deg,rgba(11, 19, 40, 0.6),rgba(12, 29, 60, 0.6));
+    border: 1px solid rgba(116, 176, 255, 0.1);
     border-radius: calc(var(--radius) + 2px);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-    max-width: var(--page-max-width); 
-    margin: 50px auto 50px auto;
-     padding: var(--page-padding-x);  
+    max-width: var(--page-max-width);
+    margin: 50px auto;
+    padding: var(--page-padding-x);
 }
 
 .mec-grid {
@@ -576,9 +910,6 @@ section:first-of-type {
 }
 
 /* Sección 5: Membrana plasmática */
-#seccion6{
-    background: linear-gradient(135deg, rgba(11,23,47,0.92), rgba(14,35,80,0.1));
-}
 
 .membrane-section {
     color: #e9f1ff;
@@ -591,7 +922,7 @@ section:first-of-type {
 }
 
 .membrane-header h2 {
-    font-family: 'Merriweather', serif;
+    font-family: 'Inter', serif;
     font-weight: 700;
     margin-bottom: 10px;
 }
@@ -622,16 +953,13 @@ section:first-of-type {
 
 /* Tarjeta genérica reutilizable (cristal + borde bonito) */
 .card {
-    --blur: 14px;
-    position: relative;
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    background:
-        radial-gradient(circle at 0 0, rgba(116, 176, 255, 0.2), transparent 55%),
-        linear-gradient(135deg, rgba(10, 19, 43, 0.96), rgba(15, 31, 70, 0.98));
-    border: 1px solid rgba(116, 176, 255, 0.4);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-    overflow: hidden;
+    background: linear-gradient(135deg,rgba(11, 19, 40, 0.6),rgba(12, 29, 60, 0.6));
+    border: 1px solid rgba(116, 176, 255, 0.1);
+    border-radius: calc(var(--radius) + 2px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    max-width: var(--page-max-width);
+    margin: 10px auto;
+    padding: var(--page-padding-x);
 }
 
 /* Efecto cristal */
@@ -679,7 +1007,7 @@ section:first-of-type {
 
 .membrane-block h3 {
     margin: 0 0 8px;
-    font-family: 'Merriweather', serif;
+    font-family: 'Inter', serif;
 }
 
 .membrane-block p {
@@ -717,11 +1045,6 @@ section:first-of-type {
 }
 
 /* Sección 6: Mitocondrias */
-
-#seccion7, #seccion9{
-    background: linear-gradient(135deg, rgba(11,19,40,0.92), rgba(12,29,60,0.1));
-
-}
 
 .mito-header {
     grid-column: 1 / -1; 
@@ -805,7 +1128,7 @@ section:first-of-type {
 
 /* Sección 7: Núcleo */
 .nucleo-section {
-    background: linear-gradient(135deg, #0b1328, #0c1d3c);
+    background: linear-gradient(135deg,rgba(11, 19, 40, 0.6),rgba(12, 29, 60, 0.6));
     border: 1px solid rgba(116, 176, 255, 0.1);
     border-radius: calc(var(--radius) + 2px);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
@@ -849,7 +1172,7 @@ section:first-of-type {
     border-radius: var(--radius);
     padding: 20px 18px 16px;
     box-shadow: var(--shadow);
-    text-align: center;
+    text-align: left;
 }
 
 .nucleo-badge {
@@ -939,12 +1262,12 @@ section:first-of-type {
 
 /* Sección 9: Síntesis de proteínas */
 .prote-section {
-    background: linear-gradient(135deg, #0c1a36, #0b1f45);
+    background: linear-gradient(135deg,rgba(11, 19, 40, 0.6),rgba(12, 29, 60, 0.6));
+    border: 1px solid rgba(116, 176, 255, 0.1);
     border-radius: calc(var(--radius) + 2px);
-    border: 1px solid rgba(116, 176, 255, 0.14);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     max-width: var(--page-max-width);
-    margin: 50px auto 50px auto;
+    margin: 50px auto;
     padding: var(--page-padding-x);
 }
 
@@ -952,6 +1275,16 @@ section:first-of-type {
     text-align: left;
     max-width: 1100px;
     margin: 0 auto 22px;
+}
+
+.prote-card{
+   position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(116, 176, 255, 0.2);
+    border-radius: var(--radius);
+    padding: 20px 18px 16px;
+    box-shadow: var(--shadow);
+    text-align: left; 
 }
 
 .prote-header p { margin: 0; color: #d8e4ff; line-height: 1.65; }
@@ -1034,17 +1367,13 @@ section:first-of-type {
 /* 
    SECCIÓN 10 – VISIÓN GLOBAL */
 
-.vision-section {
-    padding: 80px 0;
-    background: #0a1226;
-}
 
 .vision-header h2 {
-    text-align: center;
+    text-align: left;
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 25px;
-    color: #8bb8ff;
+    color: #dbe7ff;
 }
 
 .vision-image {
@@ -1061,10 +1390,10 @@ section:first-of-type {
 }
 
 .section-intro {
-    text-align: center;
+    text-align: left;
     color: #d9e6ff;
-    max-width: 900px;
-    margin: auto;
+    max-width: 1100px;
+    margin: 0 0 25px 0;
     font-size: 1.2rem;
 }
 
@@ -1147,6 +1476,119 @@ section:first-of-type {
    SUB-MENÚ INTERACTIVO INTERNO
 ============================ */
 
+.vision-section {
+    padding: 80px 0;
+}
+
+.vision-header h2 {
+    text-align: left;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #d9e6ff
+}
+
+.vision-image {
+    max-width: 850px;
+    margin: 25px auto 25px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+}
+
+.vision-image img {
+    width: 280px;
+    display: block;
+    margin: 25px auto 25px;
+}
+
+.section-intro {
+    text-align: left;
+    color: #d9e6ff;
+    max-width: 1100px;
+    font-size: 1.2rem;
+}
+
+
+/* GRID */
+.vision-grid {
+    margin-top: 45px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 25px;
+}
+
+
+/* BOXES */
+.vision-box {
+    background: rgba(20, 60, 140, 0.25);
+    border: 1px solid rgba(120, 160, 255, 0.35);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: 0.25s ease;
+}
+
+.vision-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.55);
+    border-color: #6fa9ff;
+}
+
+/* ICONS */
+.vb-icon {
+    font-size: 2.3rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 18px;
+    border-radius: 14px;
+    min-width: 65px;
+    text-align: center;
+    color: #98beff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+
+/* TEXT */
+.vision-box p {
+    color: #dce6ff;
+    line-height: 1.6;
+    font-size: 1.07rem;
+}
+
+.vision-footer {
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #9ebeff;
+    margin-bottom: -70px;
+}
+
+
+/* ANIMACIONES */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.7s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-in-delay-1 {
+    animation-delay: 0.2s;
+}
+/* ============================
+   SUB-MENÚ INTERACTIVO INTERNO
+============================ */
+
 .sub-menu {
     display: flex;
     flex-wrap: wrap;
@@ -1192,31 +1634,38 @@ body {
 ====================================================== */
 
 .sub-menu-advanced {
-    position: sticky;
-    top: 85px; 
-    z-index: 999;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin: 25px 0 40px;
-    padding: 18px 20px;
+    position: static;                 /* ya no barra sticky */
+    z-index: 1;
+    display: grid;                    /* 🔹 GRID, NO FLEX */
+    grid-template-columns: repeat(3, minmax(0, 1fr));  /* 3 tarjetas por fila */
+    gap: 18px;                        /* espacio entre tarjetas */
+    width: 100%;
+    max-width: 1100px;                /* ancho máximo del bloque */
+    margin: 25px auto 40px;           /* centrado en la página */
+    padding: 20px;
     background: rgba(20, 60, 140, 0.25);
     border: 1px solid rgba(120, 160, 255, 0.35);
     border-radius: 20px;
     backdrop-filter: blur(10px);
 }
 
+/* TARJETAS-BOTÓN */
 .sub-menu-advanced button {
-    padding: 10px 18px;
+    height: 90px;                     /* más “cuadrado” */
+    padding: 0 12px;
     border: none;
     outline: none;
     cursor: pointer;
-    background: rgba(100, 140, 255, 0.15);
+    background: rgba(100, 140, 255, 0.18);
     color: #cfe0ff;
     font-weight: 600;
-    border-radius: 12px;
+    font-size: 0.95rem;
+    border-radius: 18px;
     border: 1px solid rgba(120, 160, 255, 0.25);
+    display: flex;                    /* centra el texto en la tarjeta */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: 0.25s ease;
 }
 
@@ -1228,15 +1677,17 @@ body {
     box-shadow: 0 0 12px rgba(120, 160, 255, 0.65);
 }
 
-.sub-menu-advanced button.active {
-    background: rgba(120, 160, 255, 0.6);
-    color: white;
-    border-color: #a5c8ff;
-    box-shadow: 0 0 15px rgba(150, 180, 255, 0.9);
+/* 🔻 RESPONSIVE: se ajusta en pantallas pequeñas */
+@media (max-width: 900px) {
+    .sub-menu-advanced {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
-.sub-menu-advanced button.active:hover {
-    background: rgba(140, 180, 255, 0.75);
-    box-shadow: 0 0 18px rgba(150, 180, 255, 1);
+
+@media (max-width: 600px) {
+    .sub-menu-advanced {
+        grid-template-columns: 1fr;
+    }
 }
 /* ============================
    MODAL INTERACTIVO (VENTANA)
@@ -1248,7 +1699,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 20, 40, 0.65);
+    background: rgba(10, 20, 40, 0.5);
     backdrop-filter: blur(6px);
     display: none;
     justify-content: center;
@@ -1427,13 +1878,13 @@ body {
 /* Botón para ir a videos */
 .go-videos-btn {
     display: block;
-    margin: 50px auto 0;
+    margin: 50px 180px -48px;
     padding: 14px 24px;
     background: linear-gradient(135deg, #007bff, #00e0ff);
     color: white;
     border: none;
-    border-radius: 14px;
-    font-size: 20px;
+    border-radius: 12px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0, 200, 255, 0.3);
@@ -1457,7 +1908,6 @@ body {
     transition: 0.2s;
     display: inline-block;
 }
-
 
 .upload-video-btn:hover {
     transform: translateY(-3px);
@@ -1785,5 +2235,18 @@ body {
     .modal-content h2 {
         font-size: 24px;
     }
+}
+#loginGateOverlay {
+    z-index: 9998 !important;
+}
+
+#loginGateBox {
+    z-index: 9999 !important;
+}
+
+.auth-buttons,
+.user-info {
+    z-index: 99999 !important;
+    position: relative;
 }
 
